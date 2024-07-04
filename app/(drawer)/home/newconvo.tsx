@@ -1,4 +1,4 @@
-import { BotType, ConvoHrefObjectType } from '@/src/types/convo';
+import { BotType, ConvoHrefObject } from '@/src/types/convo';
 import { Stack, Link } from 'expo-router';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,7 +50,7 @@ export default function NewConvoScreen() {
 }
 
 function BotCard(props: BotCardProps) {
-  const hrefObject: ConvoHrefObjectType = {
+  const hrefObject: ConvoHrefObject = {
     pathname: '/(drawer)/home/convo/[convoId]',
     params: { convoId: 'new', botType: props.botType }
   }

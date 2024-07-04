@@ -1,12 +1,6 @@
 import { createContext, useState, ReactNode } from 'react';
-import { Language, Theme } from './types/context';
+import { Language, LanguageCxtType, Theme, ThemeCxtType } from './types/context';
 import { useColorScheme } from 'react-native';
-
-
-export type ThemeCxtType = {
-  theme: Theme,
-  setTheme: (newTheme: Theme) => void
-}
 
 export const ThemeContext = createContext<ThemeCxtType>({
   theme: 'light',
@@ -22,11 +16,6 @@ export const ThemeContextProvider = (props: React.PropsWithChildren): ReactNode 
       {props.children}
     </ThemeContext.Provider>
   )
-}
-
-export type LanguageCxtType = {
-  language: Language,
-  setLanguage: (newLanguage: Language) => void
 }
 
 export const LanguageContext = createContext<LanguageCxtType>({

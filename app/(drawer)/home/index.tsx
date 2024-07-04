@@ -8,21 +8,21 @@ import React from 'react';
 import { DrawerScreen } from '../../../src/components/drawer/DrawerScreen';
 import { DarkModeToggleButton } from '@/src/components/buttons/DarkModeToggleButton';
 import { LanguageToggleButton } from '@/src/components/buttons/LanguageToggleButton';
+import { ThemedText } from '@/src/components/themed/ThemedText';
 
 export default function HomeScreen() {
   const backgroundColor: ColorValue = useThemeColor('background');
-  const textColor: ColorValue = useThemeColor('text');
   const user = 'Daníel';
   const greeting = useGreeting(user)
-  console.log(backgroundColor, textColor);
+  console.log(backgroundColor);
   return (
     <>
       <View style={[styles.container, { backgroundColor }]}>
-        <DrawerScreen title='InspoBot'/>
-        <Text style={{ fontSize: 24, color: textColor , marginBottom: 100}}>{greeting}</Text>
-        <Text style={{ fontSize: 24, color: textColor }}>Press the button below to start a new convo.</Text>
-        <Button title='New convo' onPress={() => router.push('(drawer)/home/newconvo')}/>
-        <View style={{flexDirection: 'row'}}><View style={{marginRight: 20}}><DarkModeToggleButton/></View><LanguageToggleButton/></View>
+        <DrawerScreen headerRightShown={false} title='InspoBot'/>
+        <ThemedText type={'title'} style={{marginBottom: 100}}>{greeting}</ThemedText>
+        <ThemedText type={'subtitle'} style={{marginBottom: 10}}>Press the button below to start a new convo.</ThemedText>
+        <View style={{}}><Button title='New convo' onPress={() => router.push('(drawer)/home/newconvo')}></Button></View>
+        <View style={{position: 'absolute', bottom: 50, flexDirection: 'row'}}><View style={{marginRight: 20}}><DarkModeToggleButton/></View><LanguageToggleButton/></View>
       </View>
     </>
   );

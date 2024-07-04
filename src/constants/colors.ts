@@ -25,16 +25,16 @@ export const Colors: Colors = {
     text: '#000',
     icon: 'pink',
     background: 'lightgray',
-    primary: 'blue',
-    secondary: '#123',
-    ternary: '#123'
+    primary: 'lightblue',
+    secondary: 'pink',
+    ternary: 'black'
   },
   dark: {
     text: '#fff',
     icon: 'pink',
     background: '#111',
-    primary: '#123',
-    secondary: '#123',
-    ternary: '#123'
+    primary: 'orange',
+    secondary: 'purple',
+    ternary: 'white'
   }
 }

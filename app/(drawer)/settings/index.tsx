@@ -1,14 +1,16 @@
 import { Text, StyleSheet, View } from "react-native";
 import { Drawer } from 'expo-router/drawer';
 import { DrawerToggleButton } from "@react-navigation/drawer";
+import { DrawerScreen } from "@/src/components/drawer/DrawerScreen";
+import { ThemedText } from "@/src/components/themed/ThemedText";
 
 export default function Page() {
   return (
     <View style={styles.container}>
-      <Drawer.Screen options={{ headerShown: true, title: 'Settings', headerLeft: () => <DrawerToggleButton/>}} />
-      <Text style={{ fontSize: 24 }}>
+      <DrawerScreen headerRightShown={false} title={'Settings'} />
+      <ThemedText>
         Index page of Settings Drawer
-      </Text>
+      </ThemedText>
     </View>
   );
 }

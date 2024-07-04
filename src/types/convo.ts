@@ -1,11 +1,11 @@
 export type BotType = 'therapist';
 
 export type ConvoHrefSearchParams = {
-  convoId: string,
+  convoId: string | 'new',
   botType: BotType
 }
 
-export type ConvoHrefObjectType = {
+export type ConvoHrefObject = {
   pathname: string,
   params: ConvoHrefSearchParams
 }

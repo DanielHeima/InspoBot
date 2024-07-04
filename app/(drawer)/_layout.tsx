@@ -3,17 +3,18 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Drawer } from 'expo-router/drawer';
 import { View, Text, StyleSheet, StyleProp, ViewStyle, Settings } from 'react-native';
+import { useThemeColor } from '@/src/hooks/useThemeColor';
 
 
 export default function DrawerLayout(props: any) {
+  const backgroundColor = useThemeColor('primary');
   return (
     <Drawer
       screenOptions={{
-        drawerStyle: styles.drawerStyle,
+        drawerStyle: [styles.drawerStyle, {backgroundColor: backgroundColor}],
         swipeEdgeWidth: 0,
         headerShown: false,
-        drawerItemStyle: styles.drawerItemStyle
-
+        drawerItemStyle: styles.drawerItemStyle as StyleProp<ViewStyle>
       }}>
       <Drawer.Screen
         name='home'
@@ -42,10 +43,10 @@ export default function DrawerLayout(props: any) {
 
 const styles = StyleSheet.create({
   drawerStyle: {
-    backgroundColor: 'pink',
+    gap: 50,
   },
   drawerItemStyle: {
-
+    fontSize: 30
   }
 });
 
