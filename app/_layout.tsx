@@ -1,18 +1,20 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { ThemeContextProvider } from '../src/context';
+import { LanguageContextProvider, ThemeContextProvider } from '../src/context';
 
 
 export default function RootLayout() {
   return (
     <ThemeContextProvider>
-      <SafeAreaProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-        </Stack>
-      </SafeAreaProvider >
+      <LanguageContextProvider>
+        <SafeAreaProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+            <Stack.Screen name="login" options={{ headerShown: false }} />
+          </Stack>
+        </SafeAreaProvider >
+      </LanguageContextProvider>
     </ThemeContextProvider>
 
   );

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Colors } from "../constants/colors";
-import { Theme } from "../types/theme";
+import { Theme } from "../types/context";
 import { ThemeContext } from "../context";
 
 export function useThemeColor(

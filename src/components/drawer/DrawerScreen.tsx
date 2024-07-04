@@ -1,7 +1,8 @@
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer'
 import { View, Text, StyleSheet, ColorValue } from 'react-native';
-import { DarkModeToggle } from '../buttons/DarkModeToggle';
+import { DarkModeToggleButton } from '../buttons/DarkModeToggleButton';
+import { LanguageToggleButton } from '../buttons/LanguageToggleButton';
 
 type DrawerScreenType = {
   title: string;
@@ -12,7 +13,7 @@ export function DrawerScreen({title, headerLeftShown = true, headerRightShown = 
   return <Drawer.Screen options={{
       headerShown: true,
       headerLeft: () =>  headerLeftShown ? <DrawerToggleButton  /> : <></>,
-      headerRight: () => headerRightShown ? <View><DarkModeToggle/><Text>Settings</Text></View> : <></>,
+      headerRight: () => headerRightShown ? <View><DarkModeToggleButton/><LanguageToggleButton/></View> : <></>,
       title
     }} />
 }
