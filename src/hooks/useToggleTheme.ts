@@ -5,8 +5,7 @@ export function useToggleTheme() {
   const { theme, setTheme } = useContext(ThemeContext);
   const isLight = theme === 'light';
   if (isLight) {
-    setTheme('dark');
-    return;
+    return () => setTheme('dark');
   }
-  setTheme('light');
+  return () => setTheme('light');
 }
