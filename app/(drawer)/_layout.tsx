@@ -7,39 +7,35 @@ import { View, Text, StyleSheet, StyleProp, ViewStyle, Settings } from 'react-na
 
 export default function DrawerLayout(props: any) {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* {true  ?  <></> : ( */}
-      <Drawer
-        screenOptions={{
-          drawerStyle: styles.drawerStyle,
-          swipeEdgeWidth : 0,
-          headerShown: false,
-          drawerItemStyle: styles.drawerItemStyle
+    <Drawer
+      screenOptions={{
+        drawerStyle: styles.drawerStyle,
+        swipeEdgeWidth: 0,
+        headerShown: false,
+        drawerItemStyle: styles.drawerItemStyle
 
-        }}>
-        <Drawer.Screen
-          name='home'
-          options={{
-            drawerLabel: 'Home'
-          }}
-        />
-        <Drawer.Screen
-          name='myconvos'
-          options={{
-            drawerLabel: 'My convos',
-            title: 'My convos',
-          }}
-        />
-        <Drawer.Screen
-          name='settings'
-          options={{
-            drawerLabel: 'Settings',
-            title: 'Settings'
-          }}
-        /> 
-      </Drawer>
-      {/* )} */}
-    </GestureHandlerRootView >
+      }}>
+      <Drawer.Screen
+        name='home'
+        options={{
+          drawerLabel: 'Home'
+        }}
+      />
+      <Drawer.Screen
+        name='myconvos'
+        options={{
+          drawerLabel: 'My convos',
+          title: 'My convos',
+        }}
+      />
+      <Drawer.Screen
+        name='settings'
+        options={{
+          drawerLabel: 'Settings',
+          title: 'Settings'
+        }}
+      />
+    </Drawer>
   );
 }
 
@@ -49,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
   },
   drawerItemStyle: {
-    
+
   }
 });
 
