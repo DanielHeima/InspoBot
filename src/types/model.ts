@@ -17,8 +17,10 @@ export interface Convo {
 
 export interface ConvoBubble {
   convoId: Convo["id"];
-  text: string;
+  text?: string;
   byUser?: boolean;
   byBot?: boolean;
   createdAt: Date;
+  isTypeIndicator?: boolean;
 }
+

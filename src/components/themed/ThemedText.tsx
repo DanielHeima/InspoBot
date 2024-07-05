@@ -23,6 +23,7 @@ export function ThemedText({ style, type = 'default', light, dark, children, ...
 const styles = StyleSheet.create({
   default: {
     fontSize: 24,
+    fontWeight: 300
   },
   subtitle: {
     fontSize: 20,

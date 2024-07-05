@@ -1,5 +1,5 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
-  extends: 'expo',
-  plugins: ['react', 'react-native']
+  extends: ['expo'],
+  plugins: ['react', 'react-native', '@typescript-eslint'],
 };

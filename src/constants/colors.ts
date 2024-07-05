@@ -22,19 +22,19 @@ interface Colors  {
 
 export const Colors: Colors = {
   light: {
-    text: '#000',
+    text: '#444',
     icon: 'pink',
     background: 'lightgray',
     primary: 'lightblue',
     secondary: 'pink',
-    ternary: 'black'
+    ternary: '#777'
   },
   dark: {
     text: '#fff',
     icon: 'pink',
     background: '#111',
-    primary: 'orange',
+    primary: '#444',
     secondary: 'purple',
-    ternary: 'white'
+    ternary: 'orange'
   }
 }

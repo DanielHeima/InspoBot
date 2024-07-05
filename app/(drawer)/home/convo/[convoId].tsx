@@ -1,21 +1,13 @@
-import { View, Image, Text, StyleSheet, TextInput, ViewProps, NativeSyntheticEvent, TextInputSubmitEditingEventData } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { ConvoHrefSearchParams } from '@/src/types/convo';
 import { getFirstPromptByBotType } from '@/src/constants/prompts';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Convo, ConvoBubble, User } from '@/src/types/model';
 import { randomUUID } from 'expo-crypto';
-import { PropsWithChildren, useContext, useRef, useState } from 'react';
-import { ThemedText } from '@/src/components/themed/ThemedText';
-import { useThemeColor } from '@/src/hooks/useThemeColor';
-import { SvgUri } from 'react-native-svg'
-import { ThemeContext } from '@/src/context';
-import { useDownArrowAssetURI } from '@/src/hooks/useDownArrowAssetUri';
-import { DOWN_ARROW_ASSET_DARK, DOWN_ARROW_ASSET_LIGHT } from '@/src/constants/uri';
+import { Conversation } from '@/src/components/convo/Conversation';
 
 export default function ConvoScreen() {
   let { convoId, botType } = useLocalSearchParams<ConvoHrefSearchParams>();
-  const pageTitle = botType ? `Convo with an AI ${botType}` : 'Convo with an AI bot'
+  const pageTitle = botType ? `AI ${botType}` : 'AI bot'
 
   if (convoId === 'new' || !convoId) {
     convoId = randomUUID();
@@ -27,6 +19,7 @@ export default function ConvoScreen() {
   }
 
   const firstPrompt = getFirstPromptByBotType(botType);
+  console.log(firstPrompt);
 
   const dummyUser: User = {
     id: randomUUID(),
@@ -97,94 +90,3 @@ export default function ConvoScreen() {
     </>
   );
 }
-
-function Conversation(props: { convo: Convo, convoBubbles: ConvoBubble[] }) {
-  const { convo, convoBubbles } = props;
-  const scrollViewRef = useRef<ScrollView>(null);
-  const textInputRef = useRef<TextInput>(null);
-  const [bubbles, setBubbles] = useState<ConvoBubble[]>(convoBubbles);
-  const primaryColor = useThemeColor('primary');
-  const secondaryColor = useThemeColor('secondary');
-  const ternaryColor = useThemeColor('ternary');
-  const iconColor = useThemeColor('icon');
-
-  const scrollToEnd = () => {
-    scrollViewRef.current?.scrollToEnd({ animated: true })
-  }
-  const clearTextInput = () => {
-    textInputRef.current?.clear();
-  }
-
-  const onSubmitEditing = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
-    scrollToEnd();
-    console.log(e.nativeEvent.text);
-    const newText = e.nativeEvent.text;
-    if (!newText) {
-      return;
-    }
-    const newBubble: ConvoBubble = {
-      convoId: convo.id,
-      text: newText,
-      byUser: true,
-      createdAt: new Date()
-    }
-
-    setBubbles((oldBubbles) => {
-      return [...oldBubbles, newBubble]
-    })
-    clearTextInput();
-  }
-
-  const arrowUri = Image.resolveAssetSource(useDownArrowAssetURI()).uri;
-console.log(arrowUri);
-  return <>
-    <ScrollView
-      contentContainerStyle={styles.container}
-      ref={scrollViewRef}
-    >
-      <ConversationBubbles convo={convo} convoBubbles={bubbles} />
-    </ScrollView>
-    <View>
-      <View style={{position: 'absolute', bottom: 100}}>
-        <SvgUri fill={primaryColor} width={50} height={50} uri={arrowUri} />
-      </View>
-      <TextInput ref={textInputRef} onSubmitEditing={onSubmitEditing} style={{ fontSize: 24, padding: 10, height: 60, backgroundColor: primaryColor, borderColor: ternaryColor, borderWidth: 1, borderStyle: 'solid' }} placeholderTextColor={ternaryColor} placeholder={'Type your message here...'} />
-    </View>
-  </>
-}
-
-function ConversationBubbles(props: { convo: Convo, convoBubbles: ConvoBubble[] }) {
-  const { convo, convoBubbles } = props;
-  return convoBubbles.map((convoBubble, idx) => {
-    return <View key={idx}><ConversationBubble convoBubble={convoBubble} /></View>
-  })
-}
-
-function ConversationBubble(props: { convoBubble: ConvoBubble }) {
-  const { convoBubble } = props;
-  const primaryColor = useThemeColor('primary');
-  const secondaryColor = useThemeColor('secondary');
-
-  return <View style={[convoBubble.byBot ? [styles.byBot, { backgroundColor: secondaryColor }] : [styles.byUser, { backgroundColor: primaryColor }], styles.convoBubble]}><ThemedText>{convoBubble.text}</ThemedText></View>
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: 10
-  },
-  convoBubble: {
-    margin: 5,
-    maxWidth: '80%',
-    padding: 30,
-    borderRadius: 50,
-  },
-  byBot: {
-    alignSelf: 'flex-start'
-  },
-  byUser: {
-    alignSelf: 'flex-end'
-  }
-})

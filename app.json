@@ -18,7 +18,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.danielheima.InspoBot"
     },
     "web": {
       "favicon": "./src/assets/favicon.png",
@@ -27,6 +28,14 @@
     "plugins": [
       "expo-router"
     ],
-    "scheme": "your-app-scheme"
+    "scheme": "your-app-scheme",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "7ba8fa6f-e68b-4d3c-a739-38afd21ab4aa"
+      }
+    }
   }
 }
