@@ -13,6 +13,7 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
   const textInputRef = useRef<TextInput>(null);
   const [isTypeIndicatorEnabled, setIsTypeIndicatorEnabled] = useState(false);
   const [showDownArrow, setShowDownArrow] = useState(false);
+  const [dontToggleDownArrow, setDontToggleDownArrow] = useState(false);
   const [bubbles, setBubbles] = useState<ConvoBubble[]>(convoBubbles);
 
   const primaryColor = useThemeColor('primary');
@@ -24,8 +25,10 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
 
 
   const scrollToEnd = () => {
+    setDontToggleDownArrow(true);
     scrollViewRef.current?.scrollToEnd({ animated: true })
-    setTimeout(() => setShowDownArrow(false), 300);
+    setTimeout(() => setShowDownArrow(false), 100);
+    setTimeout(() => setDontToggleDownArrow(false), 1000);
   }
 
   const clearTextInput = () => {
@@ -80,6 +83,9 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const windowHeight = Dimensions.get('window').height;
     const { contentSize, contentOffset, layoutMeasurement } = e.nativeEvent;
+    if (dontToggleDownArrow) {
+      return;
+    }
     setShowDownArrow(layoutMeasurement.height + contentOffset.y <= contentSize.height - windowHeight / 2);
   }
 
