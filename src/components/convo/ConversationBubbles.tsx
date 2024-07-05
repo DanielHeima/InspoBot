@@ -2,12 +2,12 @@ import { View } from "react-native";
 import { ConversationBubble } from "./ConversationBubble";
 import React from "react";
 import { TypingIndicator } from "./TypingIndicator";
-import { styles } from "./Conversation";
-import { Convo, ConvoBubble } from "@/src/types/model";
+import { ConvoBubble } from "@/src/types/model";
+import { styles } from "./ConvoStyles";
 
 export function ConversationBubbles(
-  { typeIndicatorEnabled, convo, convoBubbles }: 
-  { typeIndicatorEnabled: boolean; convo: Convo, convoBubbles: ConvoBubble[] }) {
+  { typeIndicatorEnabled, convoBubbles }: 
+  { typeIndicatorEnabled: boolean; convoBubbles: ConvoBubble[] }) {
   return <>
     {convoBubbles.map((convoBubble, idx) => {
       return <View key={idx}>

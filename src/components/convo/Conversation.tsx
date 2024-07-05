@@ -6,6 +6,7 @@ import { useThemeColor } from '@/src/hooks/useThemeColor';
 import { useDownArrowAssetURI } from '@/src/hooks/useDownArrowAssetUri';
 import { ConversationBubbles } from './ConversationBubbles';
 import { DownArrow } from '../icons/DownArrow';
+import { styles } from './ConvoStyles';
 
 export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbles: ConvoBubble[] }) {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -23,7 +24,6 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
 
 
   const scrollToEnd = () => {
-    setShowDownArrow(false);
     scrollViewRef.current?.scrollToEnd({ animated: true })
     setTimeout(() => setShowDownArrow(false), 300);
   }
@@ -91,9 +91,9 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
       contentContainerStyle={styles.container}
       ref={scrollViewRef}
       onScroll={onScroll}
-      scrollEventThrottle={50}
+      scrollEventThrottle={200}
     >
-      <ConversationBubbles convo={convo} convoBubbles={bubbles} typeIndicatorEnabled={isTypeIndicatorEnabled} />
+      <ConversationBubbles convoBubbles={bubbles} typeIndicatorEnabled={isTypeIndicatorEnabled} />
     </ScrollView>
     <View>
       <DownArrow
@@ -106,24 +106,3 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
     </View>
   </>
 }
-
-export const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: 10
-  },
-  convoBubble: {
-    margin: 5,
-    maxWidth: '80%',
-    padding: 30,
-    borderRadius: 50,
-  },
-  byBot: {
-    alignSelf: 'flex-start'
-  },
-  byUser: {
-    alignSelf: 'flex-end'
-  }
-})

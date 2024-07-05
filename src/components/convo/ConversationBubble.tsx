@@ -2,7 +2,8 @@ import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { ConvoBubble } from "@/src/types/model";
 import { View } from "react-native";
 import { ThemedText } from "../themed/ThemedText";
-import { styles } from "./Conversation";
+import { styles } from "./ConvoStyles";
+
 
 export function ConversationBubble(
   { convoBubble }: 
