@@ -1,28 +1,42 @@
-import { View, Image, Dimensions, StyleSheet, TextInput, NativeSyntheticEvent, TextInputSubmitEditingEventData, NativeScrollEvent } from 'react-native';
+import { View, Image, Dimensions, TextInput, NativeSyntheticEvent, TextInputSubmitEditingEventData, NativeScrollEvent } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Convo, ConvoBubble } from '@/src/types/model';
 import { useEffect, useRef, useState } from 'react';
-import { useThemeColor } from '@/src/hooks/useThemeColor';
+import { useThemeColor, useThemeColors } from '@/src/hooks/useThemeColor';
 import { useDownArrowAssetURI } from '@/src/hooks/useDownArrowAssetUri';
 import { ConversationBubbles } from './ConversationBubbles';
 import { DownArrow } from '../icons/DownArrow';
 import { styles } from './ConvoStyles';
+import { useExternalBotConvo } from '@/src/hooks/useExternalBotConvo';
+import { compareBubbles } from '@/src/utils';
+import { ThemedText } from '../themed/ThemedText';
+import { useFirstPromptByBotType } from '@/src/hooks/useFirstPromptByBotType';
 
 export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbles: ConvoBubble[] }) {
   const scrollViewRef = useRef<ScrollView>(null);
   const textInputRef = useRef<TextInput>(null);
-  const [isTypeIndicatorEnabled, setIsTypeIndicatorEnabled] = useState(false);
+  // const [isTypeIndicatorEnabled, setIsTypeIndicatorEnabled] = useState(false);
   const [showDownArrow, setShowDownArrow] = useState(false);
   const [dontToggleDownArrow, setDontToggleDownArrow] = useState(false);
-  const [bubbles, setBubbles] = useState<ConvoBubble[]>(convoBubbles);
+  const [bubbles, setBubbles] = useState<ConvoBubble[]>(convoBubbles.sort(compareBubbles));
+  const [prompt, setPrompt] = useState('');
+  const { isLoading, response, error } = useExternalBotConvo(prompt, bubbles);
+  const firstPrompt = useFirstPromptByBotType(convo.botType);
+  const {
+    textColor,
+    backgroundColor,
+    primaryColor,
+    ternaryColor } = useThemeColors();
 
-  const primaryColor = useThemeColor('primary');
-  const backgroundColor = useThemeColor('background');
-  const textColor = useThemeColor('text');
-  const secondaryColor = useThemeColor('secondary');
-  const ternaryColor = useThemeColor('ternary');
-  const iconColor = useThemeColor('icon');
-
+  if (bubbles.length === 0 && !prompt) {
+    setBubbles([{
+      convoId: convo.id,
+      createdAt: new Date(),
+      byBot: true,
+      hidden: true,
+      text: firstPrompt
+    }])
+  }
 
   const scrollToEnd = () => {
     setDontToggleDownArrow(true);
@@ -36,48 +50,59 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
   }
 
   useEffect(() => {
-
-  }, [isTypeIndicatorEnabled])
-
-
-  const onSubmitEditing = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
-    setIsTypeIndicatorEnabled(true);
-    scrollToEnd();
-    clearTextInput();
-    
-    console.log(isTypeIndicatorEnabled); // stundum true og stundum false... ekki alltaf að ná að updateast
-    const newText = e.nativeEvent.text;
-    if (!newText) {
-      setIsTypeIndicatorEnabled(false);
+    let update = true;
+    if (!response) {
       return;
     }
+    
+    if (!response.message) {
+      return;
+    }
+    
+    console.log('useeffect response', response);
+
+    const newBubble: ConvoBubble = {
+      convoId: convo.id,
+      text: response.message,
+      byBot: true,
+      createdAt: new Date()
+    }
+
+    if (update) {
+      setBubbles((oldBubbles) => {
+        if (oldBubbles.length <= 1) {
+          return [...oldBubbles, newBubble];
+        }
+        if (oldBubbles[oldBubbles.length - 1]?.byUser) {
+          return [...oldBubbles, newBubble];
+        } 
+        return oldBubbles
+      })
+      setTimeout(() => scrollToEnd(), 200);
+    }
+
+    return () => { update = false };
+  }, [response, convo.id])
+
+  const onSubmitEditing = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
+    const { text: newText } = e.nativeEvent;
+    if (!newText) {
+      return;
+    }
+    
+    scrollToEnd();
+    clearTextInput();
     const newBubble: ConvoBubble = {
       convoId: convo.id,
       text: newText,
       byUser: true,
       createdAt: new Date()
     }
-
     setBubbles((oldBubbles) => {
-      return [...oldBubbles, newBubble]
+      return [...oldBubbles, newBubble];
     })
 
-    setTimeout(() => {
-      let botAnswer: ConvoBubble = {
-        convoId: convo.id,
-        text: newText,
-        byBot: true,
-        createdAt: new Date()
-      };
-      if (isTypeIndicatorEnabled) {
-        doIt(botAnswer);
-        setIsTypeIndicatorEnabled(false);
-      }
-    }, 1000);
-  }
-  function doIt(botAnswer: ConvoBubble) {
-    console.log(botAnswer);
-    setBubbles((oldBubbles) => [...oldBubbles, botAnswer])
+    setPrompt(newText);
   }
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -97,9 +122,10 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
       contentContainerStyle={styles.container}
       ref={scrollViewRef}
       onScroll={onScroll}
-      scrollEventThrottle={200}
+      scrollEventThrottle={50}
     >
-      <ConversationBubbles convoBubbles={bubbles} typeIndicatorEnabled={isTypeIndicatorEnabled} />
+      <ConversationBubbles convoBubbles={bubbles} typeIndicatorEnabled={isLoading} />
+      {error ? <ThemedText type={'subtitle'} dark={'red'} light={'red'}>{error}</ThemedText> : <></>}
     </ScrollView>
     <View>
       <DownArrow
@@ -108,7 +134,20 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
         arrowUri={arrowUri}
         scrollToEnd={scrollToEnd}
       />
-      <TextInput ref={textInputRef} onSubmitEditing={onSubmitEditing} style={{ color: textColor, fontSize: 24, padding: 10, height: 60, backgroundColor: primaryColor, borderColor: ternaryColor, borderWidth: 1, borderStyle: 'solid' }} placeholderTextColor={ternaryColor} placeholder={'Type your message here...'} />
+      <TextInput
+        ref={textInputRef}
+        onSubmitEditing={onSubmitEditing}
+        style={{
+          color: textColor,
+          fontSize: 24,
+          padding: 10,
+          height: 60,
+          backgroundColor: primaryColor,
+          borderColor: ternaryColor,
+          borderWidth: 1,
+          borderStyle: 'solid'
+        }}
+        placeholderTextColor={ternaryColor} placeholder={'Type your message here...'} />
     </View>
   </>
 }

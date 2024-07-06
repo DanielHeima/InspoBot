@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { BotType } from "../types/convo";
 import { LanguageContext } from "../context";
 
-export function getFirstPromptByBotType(botType: BotType): string {
+export function useFirstPromptByBotType(botType: BotType): string {
   const lang = useContext(LanguageContext).language;
   const FIRST_PROMPT = {
     en: {

@@ -11,6 +11,10 @@ export function ConversationBubble(
   const primaryColor = useThemeColor('primary');
   const secondaryColor = useThemeColor('secondary');
 
+  if (convoBubble.hidden) {
+    return;
+  }
+
   return <View style={[convoBubble.byBot ? [styles.byBot, { backgroundColor: secondaryColor }] : [styles.byUser, { backgroundColor: primaryColor }], styles.convoBubble]}>
     <ThemedText>
       {convoBubble.text}

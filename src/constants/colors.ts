@@ -24,9 +24,9 @@ export const Colors: Colors = {
   light: {
     text: '#444',
     icon: 'pink',
-    background: 'lightgray',
-    primary: 'lightblue',
-    secondary: 'pink',
+    background: '#ffe',
+    primary: '#95deda',
+    secondary: '#edb9d8',
     ternary: '#777'
   },
   dark: {

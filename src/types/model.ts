@@ -21,6 +21,6 @@ export interface ConvoBubble {
   byUser?: boolean;
   byBot?: boolean;
   createdAt: Date;
-  isTypeIndicator?: boolean;
+  hidden?: boolean;
 }
 
