@@ -89,7 +89,7 @@ export function useExternalBotConvo(
     })
 
     return () => { update = false }
-  }, [prompt, messageBubbles])
+  }, [messageBubbles])
 
   return { isLoading, response, error }
 }
