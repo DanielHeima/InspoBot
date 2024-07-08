@@ -1,3 +1,4 @@
+import { sleep } from "openai/core";
 import { useEffect, useState } from "react";
 import { OpenAI } from "openai";
 import { ChatModel } from "openai/resources";
@@ -53,10 +54,26 @@ export function useExternalBotConvo(
         setIsLoading(false);
         return;
       }
+
+      await sleep(1000);
+      const url = `https://jsonplaceholder.typicode.com/todos/${Math.floor(Math.random() * 20) + 1}`;
+      console.log(url)
+      const result = await fetch(url);
+      const data: { 
+        userId: number, 
+        id: number, 
+        title: string, 
+        completed: false } = await result.json();
+
+
+      const answer: string = data["title"]
+      
+      /*
  
       const chatCompletion = await openai.chat.completions.create(body as OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming);
       const answer = chatCompletion.choices[0]?.message?.content ?? "";
       console.log(answer, update);
+      */
 
       if (update) {
         setResponse({ date: timeFetched, message: answer });

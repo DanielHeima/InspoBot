@@ -13,13 +13,17 @@ import { ThemedText } from '../themed/ThemedText';
 import { useFirstPromptByBotType } from '@/src/hooks/useFirstPromptByBotType';
 
 export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbles: ConvoBubble[] }) {
+  // refs
   const scrollViewRef = useRef<ScrollView>(null);
   const textInputRef = useRef<TextInput>(null);
-  // const [isTypeIndicatorEnabled, setIsTypeIndicatorEnabled] = useState(false);
+
+  // state
   const [showDownArrow, setShowDownArrow] = useState(false);
   const [dontToggleDownArrow, setDontToggleDownArrow] = useState(false);
   const [bubbles, setBubbles] = useState<ConvoBubble[]>(convoBubbles.sort(compareBubbles));
   const [prompt, setPrompt] = useState('');
+
+  // hooks
   const { isLoading, response, error } = useExternalBotConvo(prompt, bubbles);
   const firstPrompt = useFirstPromptByBotType(convo.botType);
   const {
@@ -28,16 +32,7 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
     primaryColor,
     ternaryColor } = useThemeColors();
 
-  if (bubbles.length === 0 && !prompt) {
-    setBubbles([{
-      convoId: convo.id,
-      createdAt: new Date(),
-      byBot: true,
-      hidden: true,
-      text: firstPrompt
-    }])
-  }
-
+  // procedures
   const scrollToEnd = () => {
     setDontToggleDownArrow(true);
     scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -49,41 +44,7 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
     textInputRef.current?.clear();
   }
 
-  useEffect(() => {
-    let update = true;
-    if (!response) {
-      return;
-    }
-    
-    if (!response.message) {
-      return;
-    }
-    
-    console.log('useeffect response', response);
-
-    const newBubble: ConvoBubble = {
-      convoId: convo.id,
-      text: response.message,
-      byBot: true,
-      createdAt: new Date()
-    }
-
-    if (update) {
-      setBubbles((oldBubbles) => {
-        if (oldBubbles.length <= 1) {
-          return [...oldBubbles, newBubble];
-        }
-        if (oldBubbles[oldBubbles.length - 1]?.byUser) {
-          return [...oldBubbles, newBubble];
-        } 
-        return oldBubbles
-      })
-      setTimeout(() => scrollToEnd(), 200);
-    }
-
-    return () => { update = false };
-  }, [response, convo.id])
-
+  // handlers
   const onSubmitEditing = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
     const { text: newText } = e.nativeEvent;
     if (!newText) {
@@ -113,6 +74,51 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
     }
     setShowDownArrow(layoutMeasurement.height + contentOffset.y <= contentSize.height - windowHeight / 2);
   }
+
+  // first prompt
+  if (bubbles.length === 0 && !prompt) {
+    setBubbles([{
+      convoId: convo.id,
+      createdAt: new Date(),
+      byBot: true,
+      hidden: true,
+      text: firstPrompt
+    }])
+  }
+
+  useEffect(() => {
+    let update = true;
+    if (!response) {
+      return;
+    }
+    
+    if (!response.message) {
+      return;
+    }
+    
+    const newBubble: ConvoBubble = {
+      convoId: convo.id,
+      text: response.message,
+      byBot: true,
+      createdAt: new Date()
+    }
+
+    if (update) {
+      setBubbles((oldBubbles) => {
+        if (oldBubbles.length <= 1) {
+          return [...oldBubbles, newBubble];
+        }
+        if (oldBubbles[oldBubbles.length - 1]?.byUser) {
+          return [...oldBubbles, newBubble];
+        } 
+        return oldBubbles
+      })
+      setTimeout(() => scrollToEnd(), 200);
+    }
+
+    return () => { update = false };
+  }, [response, convo.id])
+
 
   const arrowUri = Image.resolveAssetSource(useDownArrowAssetURI()).uri;
 
@@ -147,7 +153,7 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
           borderWidth: 1,
           borderStyle: 'solid'
         }}
-        placeholderTextColor={ternaryColor} placeholder={'Type your message here...'} />
+        placeholderTextColor={ternaryColor} placeholder={'Type a message...'} />
     </View>
   </>
 }

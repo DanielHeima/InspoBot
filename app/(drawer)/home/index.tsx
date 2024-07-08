@@ -17,7 +17,7 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.container}>
-        <DrawerScreen headerRightShown={false} title='InspoBot'/>
+        <DrawerScreen title='InspoBot'/>
         <ThemedText type={'title'} style={{marginBottom: 100}}>{greeting}</ThemedText>
         <ThemedText type={'subtitle'} style={{marginBottom: 10}}>Press the button below to start a new convo.</ThemedText>
         <View style={{}}><Button title='New convo' onPress={() => router.push('(drawer)/home/newconvo')}></Button></View>

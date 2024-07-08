@@ -1,6 +1,7 @@
-import { createContext, useState, ReactNode } from 'react';
-import { Language, LanguageCxtType, Theme, ThemeCxtType } from './types/context';
+import { createContext, useState, ReactNode, useContext } from 'react';
+import { Language, LanguageCxtType, SvgIconState, SvgIconStateCxtType, Theme, ThemeCxtType } from './types/context';
 import { useColorScheme } from 'react-native';
+import { moonUri, sunUri } from './constants/uri';
 
 export const ThemeContext = createContext<ThemeCxtType>({
   theme: 'light',
@@ -33,3 +34,21 @@ export const LanguageContextProvider = (props: React.PropsWithChildren): ReactNo
     </LanguageContext.Provider>
   )
 }
+
+export const SvgIconStateContext = createContext<SvgIconStateCxtType>({
+  svgIconState: { type: 'moon', uri: moonUri },
+  setSvgIconState: () => {}
+})
+
+export const SvgIconStateContextProvider = (props: React.PropsWithChildren): ReactNode => {
+  const [svgIconState, setSvgIconState] = useState<SvgIconState>({ type: 'moon', uri: moonUri });
+  const SvgIconStateContextValue: SvgIconStateCxtType = { svgIconState, setSvgIconState };
+
+  return (
+    <SvgIconStateContext.Provider value={SvgIconStateContextValue}>
+      {props.children}
+    </SvgIconStateContext.Provider>
+  )
+}
+
+// TODO svg ad haga ser skryngilega. Voru ohadir en context virdist gera illt verra
