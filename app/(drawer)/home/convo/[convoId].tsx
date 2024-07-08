@@ -5,7 +5,6 @@ import { randomUUID } from 'expo-crypto';
 import { Conversation } from '@/src/components/convo/Conversation';
 import { StackScreen } from '@/src/components/screen/StackScreen';
 import { useLabel } from '@/src/hooks/useLabel';
-import { Text } from 'react-native';
 import { ThemedText } from '@/src/components/themed/ThemedText';
 
 export default function ConvoScreen() {
@@ -88,7 +87,13 @@ export default function ConvoScreen() {
 
   return (
     <>
-      <StackScreen title={pageTitle} showThemeToggle={true} HeaderRightProp={() => <ThemedText style={{ marginRight: 20 }}>{botType}</ThemedText>} />
+      <StackScreen
+        title={pageTitle}
+        showThemeToggle={true}
+        HeaderRightProp={() => <ThemedText style={{ marginRight: 20 }}>
+          {botType}
+        </ThemedText>}
+      />
       <Conversation convo={convo} convoBubbles={[]} />
     </>
   );

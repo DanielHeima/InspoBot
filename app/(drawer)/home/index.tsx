@@ -19,7 +19,7 @@ export default function HomeScreen() {
         <ThemedText>{useLabel('homePressButtonBelow')}</ThemedText>
         <View style={{ marginTop: 40 }}><Button title={'TODO BREYTA  new convo'} onPress={() => router.push('(drawer)/home/newconvo')}></Button></View>
         
-        <ThemedText style={{ marginTop: 40 }} type={'subtitle'}>{useLabel('newConvoGoToOlder')}</ThemedText>
+        <ThemedText style={{ marginTop: 40 }} type={'subtitle'}>{useLabel('homeGoToOlder')}</ThemedText>
       </ThemedView>
     </>
   );

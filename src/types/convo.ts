@@ -1,4 +1,4 @@
-export type BotType = 'raw'|'inspirational'|'therapist';
+export type BotType = 'raw'|'inspirational'|'therapist'|'travel agent';
 
 export type ConvoHrefSearchParams = {
   convoId: string | 'new',

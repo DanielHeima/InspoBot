@@ -34,6 +34,13 @@ export default function DrawerLayout() {
           title: useLabel('navSettings')
         }}
       />
+      <Drawer.Screen
+        name='support'
+        options={{
+          drawerLabel: useLabel('navSupport'),
+          title: useLabel('navSupport')
+        }}
+      />
     </Drawer>
   );
 }

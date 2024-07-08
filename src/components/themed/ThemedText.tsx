@@ -11,7 +11,7 @@ type ThemedTextProps = TextProps & {
 export function ThemedText({ style, type = 'default', light, dark, children, ...rest }: ThemedTextProps) {
   const color = useThemeColor('text', { light, dark })
   return <Text style={[style,
-    { color },
+    { color, display: 'flex', flexWrap: "wrap" },
     type === 'default' ? styles.default : undefined,
     type === 'subtitle' ? styles.subtitle : undefined,
     type === 'title' ? styles.title : undefined]}
