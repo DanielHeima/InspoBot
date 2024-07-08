@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { Colors } from "../constants/colors";
+import { COLORS } from "../constants/colors";
 import { ThemeContext } from "../context";
 import { ColorValue } from "react-native";
 
 export function useThemeColor(
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
+  colorName: keyof typeof COLORS.light & keyof typeof COLORS.dark,
   props?: { light?: ColorValue; dark?: ColorValue },
 ): ColorValue {
   const { theme } = useContext(ThemeContext);
@@ -12,7 +12,7 @@ export function useThemeColor(
   if (colorFromProps) {
     return colorFromProps;
   }
-  return Colors[theme][colorName]
+  return COLORS[theme][colorName]
 }
 
 export function useThemeColors() {

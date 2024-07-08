@@ -10,8 +10,8 @@ export type ThemeCxtType = {
   theme: Theme,
   setTheme: (newTheme: Theme) => void
 }
-export type SvgIconState = ThemeToggleSvgIconState;
-export type SvgIconStateCxtType = {
+export type ThemeSvgIconState = ThemeToggleSvgIconState;
+export type ThemeSvgIconStateCxtType = {
   svgIconState: ThemeToggleSvgIconState,
   setSvgIconState: (newSvgIconState: ThemeToggleSvgIconState) => void
 }

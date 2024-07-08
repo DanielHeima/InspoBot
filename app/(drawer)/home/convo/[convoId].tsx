@@ -1,12 +1,14 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { ConvoHrefSearchParams } from '@/src/types/convo';
 import { Convo, ConvoBubble, User } from '@/src/types/model';
 import { randomUUID } from 'expo-crypto';
 import { Conversation } from '@/src/components/convo/Conversation';
+import { StackScreen } from '@/src/components/screen/StackScreen';
 
 export default function ConvoScreen() {
   let { convoId, botType } = useLocalSearchParams<ConvoHrefSearchParams>();
-  const pageTitle = botType ? `AI ${botType}` : 'AI bot'
+  
+  const pageTitle = `AI ${botType} chat`;
 
   if (convoId === 'new' || !convoId) {
     convoId = randomUUID();
@@ -82,7 +84,7 @@ export default function ConvoScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, title: pageTitle }} />
+      <StackScreen title={pageTitle} headerRightShown={false} />
       <Conversation convo={convo} convoBubbles={[]} />
     </>
   );

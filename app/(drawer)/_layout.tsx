@@ -1,12 +1,9 @@
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Drawer } from 'expo-router/drawer';
-import { View, Text, StyleSheet, StyleProp, ViewStyle, Settings } from 'react-native';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useThemeColor } from '@/src/hooks/useThemeColor';
 
 
-export default function DrawerLayout(props: any) {
+export default function DrawerLayout() {
   const backgroundColor = useThemeColor('primary');
   return (
     <Drawer

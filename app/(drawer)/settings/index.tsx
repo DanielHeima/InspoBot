@@ -1,7 +1,7 @@
 import { Text, StyleSheet, View } from "react-native";
 import { Drawer } from 'expo-router/drawer';
 import { DrawerToggleButton } from "@react-navigation/drawer";
-import { DrawerScreen } from "@/src/components/drawer/DrawerScreen";
+import { DrawerScreen } from "@/src/components/screen/DrawerScreen";
 import { ThemedText } from "@/src/components/themed/ThemedText";
 
 export default function Page() {

@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Drawer } from 'expo-router/drawer'
 import { DrawerToggleButton } from "@react-navigation/drawer";
-import { DrawerScreen } from '@/src/components/drawer/DrawerScreen';
+import { DrawerScreen } from '@/src/components/screen/DrawerScreen';
 import { ThemedView } from '@/src/components/themed/ThemedView';
 
 

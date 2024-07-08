@@ -20,7 +20,7 @@ interface Colors  {
   };
 }
 
-export const Colors: Colors = {
+export const COLORS: Colors = {
   light: {
     text: '#48284a',
     icon: '#06bcc1',

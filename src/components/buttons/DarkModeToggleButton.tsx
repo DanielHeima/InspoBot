@@ -1,21 +1,19 @@
-import { Image, View, Text, Pressable } from "react-native";
-import { useThemeColor } from "../../hooks/useThemeColor";
+import { View, Pressable, ViewStyle } from "react-native";
 import { useToggleTheme } from "../../hooks/useToggleTheme";
-import { useContext, useState } from "react";
-import { SvgIconStateContext, ThemeContext } from "@/src/context";
-import { Svg, SvgUri } from "react-native-svg";
+import { useContext } from "react";
+import { ThemeSvgIconStateContext } from "@/src/context";
+import { SvgUri } from "react-native-svg";
 import { useSpring, animated } from "@react-spring/native";
-import { ThemeToggleSvgIconState } from "@/src/types/icons";
-import { Colors } from "@/src/constants/colors";
-import { moonUri, sunUri } from "@/src/constants/uri";
+import { COLORS } from "@/src/constants/colors";
 import { useToggleSvgIconState } from "@/src/hooks/useToggleSvgIconState";
+import { StyleProp } from "react-native";
 
-export function DarkModeToggleButton() {
-  const { svgIconState } = useContext(SvgIconStateContext); 
+export function DarkModeToggleButton({ style }: { style?: StyleProp<ViewStyle> }) {
+  const { svgIconState } = useContext(ThemeSvgIconStateContext);
   const toggleTheme = useToggleTheme();
   const toggleUri = useToggleSvgIconState();
-  const sunFillColor = Colors['light']['icon'];
-  const sunStrokeColor = Colors['light']['secondary'];
+  const sunFillColor = COLORS['light']['icon'];
+  const sunStrokeColor = COLORS['light']['secondary'];
 
   const handleClick = () => {
     toggleTheme();
@@ -23,12 +21,14 @@ export function DarkModeToggleButton() {
       to: async (next) => {
         await next({
           rotate: "180deg",
-          scale: 0
+          scale: 0,
+          opacity: 0
         });
         toggleUri();
         await next({
           rotate: "360deg",
-          scale: 1
+          scale: 1,
+          opacity: 1,
         })
       },
       from: { rotate: "0deg", scale: 1 }
@@ -38,36 +38,39 @@ export function DarkModeToggleButton() {
   const [springs, api] = useSpring(() => {
     return {
       to: {
-        rotate: "360deg",
+        rotate: "0deg",
         scale: 1,
+        opacity: 1
       },
-      from: { rotate: "0deg", scale: 1 },
+      from: { rotate: "0deg", scale: 1, opacity: 1 },
       config: {
-        duration: 400
+        duration: 500,
       }
     }
   });
 
   const AnimatedView = animated(View);
 
-  return <AnimatedView
-    style={{
-      transform: [
-        { scale: springs.scale },
-        { rotate: springs.rotate }]
-    }}
-  >
-    <Pressable
-      onPress={handleClick}
+  return <View style={style}>
+    <AnimatedView
+      style={{
+        transform: [
+          { scale: springs.scale },
+          { rotate: springs.rotate },
+        ],
+        opacity: springs.opacity
+      }}
     >
-      <SvgUri
-        fill={svgIconState.type === 'moon' ? '#333' : sunStrokeColor}
-        stroke={svgIconState.type === 'moon' ? '#333' : sunFillColor}
-        width={50}
-        height={50}
-        uri={svgIconState.uri} />
-    </Pressable>
-  </AnimatedView>
-
-  // TODO takkar vita ekki af state i hvorum odrum
+      <Pressable
+        onPress={handleClick}
+      >
+        <SvgUri
+          fill={svgIconState.type === 'moon' ? '#333' : sunStrokeColor}
+          stroke={svgIconState.type === 'moon' ? '#333' : sunFillColor}
+          width={30}
+          height={30}
+          uri={svgIconState.uri} />
+      </Pressable>
+    </AnimatedView>
+  </View>
 }
