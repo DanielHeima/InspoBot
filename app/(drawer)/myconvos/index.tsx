@@ -8,9 +8,9 @@ import { ThemedView } from '@/src/components/themed/ThemedView';
 
 export default function MyConvosScreen() {
   return (
-    <ThemedView>
-      <DrawerScreen title={'My convos'}/>
-      <ThemedView><Text>Nothing to see here.</Text></ThemedView>
+    <ThemedView style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
+      <DrawerScreen showLangToggle={true} showThemeToggle={true} title={'My convos'} />
+      <ThemedView><Text style={{ fontSize: 24 }}>Nothing to see here.</Text></ThemedView>
     </ThemedView>
   );
 }

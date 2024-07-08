@@ -4,11 +4,15 @@ import { Convo, ConvoBubble, User } from '@/src/types/model';
 import { randomUUID } from 'expo-crypto';
 import { Conversation } from '@/src/components/convo/Conversation';
 import { StackScreen } from '@/src/components/screen/StackScreen';
+import { useLabel } from '@/src/hooks/useLabel';
+import { Text } from 'react-native';
+import { ThemedText } from '@/src/components/themed/ThemedText';
 
 export default function ConvoScreen() {
   let { convoId, botType } = useLocalSearchParams<ConvoHrefSearchParams>();
-  
-  const pageTitle = `AI ${botType} chat`;
+  const pageTitle = useLabel('convoPageTitle');
+
+  console.log(pageTitle);
 
   if (convoId === 'new' || !convoId) {
     convoId = randomUUID();
@@ -84,7 +88,7 @@ export default function ConvoScreen() {
 
   return (
     <>
-      <StackScreen title={pageTitle} headerRightShown={false} />
+      <StackScreen title={pageTitle} showThemeToggle={true} HeaderRightProp={() => <ThemedText style={{ marginRight: 20 }}>{botType}</ThemedText>} />
       <Conversation convo={convo} convoBubbles={[]} />
     </>
   );

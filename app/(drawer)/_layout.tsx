@@ -1,6 +1,7 @@
 import { Drawer } from 'expo-router/drawer';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useThemeColor } from '@/src/hooks/useThemeColor';
+import { useLabel } from '@/src/hooks/useLabel';
 
 
 export default function DrawerLayout() {
@@ -16,21 +17,21 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name='home'
         options={{
-          drawerLabel: 'Home'
+          drawerLabel: useLabel('navHome')
         }}
       />
       <Drawer.Screen
         name='myconvos'
         options={{
-          drawerLabel: 'My convos',
-          title: 'My convos',
+          drawerLabel: useLabel('navMyConvos'),
+          title: useLabel('navMyConvos'),
         }}
       />
       <Drawer.Screen
         name='settings'
         options={{
-          drawerLabel: 'Settings',
-          title: 'Settings'
+          drawerLabel: useLabel('navSettings'),
+          title: useLabel('navSettings')
         }}
       />
     </Drawer>

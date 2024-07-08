@@ -7,15 +7,17 @@ import { HeaderRight } from './HeaderRight';
 type DrawerScreenType = {
   title: string;
   headerLeftShown?: boolean;
-  headerRightShown?: boolean;
+  headerRightShown?: boolean,
+  showLangToggle?: boolean,
+  showThemeToggle?: boolean;
 }
-export function DrawerScreen({ title, headerLeftShown = true, headerRightShown = true }: DrawerScreenType) {
+export function DrawerScreen({ title, headerLeftShown = true, headerRightShown = true, ...rest }: DrawerScreenType) {
   const headerColor = useThemeColor('primary');
   return <Drawer.Screen options={{
     headerShown: true,
     headerBackground: () => <HeaderBackground headerColor={headerColor}/>,
     headerLeft: () => headerLeftShown ? <DrawerToggleButton /> : <></>,
-    headerRight: () => headerRightShown ? <HeaderRight /> : <></>,
+    headerRight: () => headerRightShown ? <HeaderRight {...rest} /> : <></>,
     title
   }} />
 }

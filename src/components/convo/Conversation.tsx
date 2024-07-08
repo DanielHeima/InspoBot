@@ -11,6 +11,7 @@ import { useExternalBotConvo } from '@/src/hooks/useExternalBotConvo';
 import { compareBubbles } from '@/src/utils';
 import { ThemedText } from '../themed/ThemedText';
 import { useFirstPromptByBotType } from '@/src/hooks/useFirstPromptByBotType';
+import { useLabel } from '@/src/hooks/useLabel';
 
 export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbles: ConvoBubble[] }) {
   // refs
@@ -153,7 +154,7 @@ export function Conversation({ convo, convoBubbles }: { convo: Convo, convoBubbl
           borderWidth: 1,
           borderStyle: 'solid'
         }}
-        placeholderTextColor={ternaryColor} placeholder={'Type a message...'} />
+        placeholderTextColor={ternaryColor} placeholder={useLabel('convoPlaceHolder')} />
     </View>
   </>
 }
