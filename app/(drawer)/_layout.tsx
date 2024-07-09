@@ -46,7 +46,6 @@ export default function DrawerLayout() {
 const styles = StyleSheet.create({
   drawerStyle: {
     display: 'flex',
-    justifyContent: 'space-evenly'
   },
   drawerItemStyle: {
     fontSize: 30

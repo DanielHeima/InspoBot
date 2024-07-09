@@ -2,8 +2,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { LanguageContextProvider, SvgIconStateContextProvider, ThemeContextProvider } from '../src/context';
 
-
 export default function RootLayout() {
+  
   return (
     <ThemeContextProvider>
       <LanguageContextProvider>
