@@ -3,21 +3,23 @@ import { ThemedView } from '@/src/components/themed/ThemedView';
 import { useLabel } from '@/src/hooks/useLabel';
 import { BotType, ConvoHrefObject } from '@/src/types/convo';
 import { Link } from 'expo-router';
-import { Text, StyleSheet, Image, FlatList } from 'react-native';
+import { Text, StyleSheet, Image, FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type BotCardProps = {
   botType: BotType
 }
 
-const DATA: { botType: BotType}[]= [
+const DATA: { botType: BotType }[] = [
+  {
+    botType: 'inspirational'
+  },
   {
     botType: 'therapist',
   },
   {
-    botType: 'inspirational'
+    botType: 'travel agent'
   }
-
 ]
 
 export default function NewConvoScreen() {
@@ -29,15 +31,19 @@ export default function NewConvoScreen() {
       headerRightShown={true}
       title={useLabel('navNewConvo')} />
     <SafeAreaView style={styles.container}>
-      <Text>Spjalla við hráan botta</Text>
-      <BotCard botType={'raw'} />
-      <Text>Eða veldu einhvern af þessum: </Text>
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) => <BotCard botType={item.botType} />}
-        keyExtractor={(_, idx) => idx.toString()}
-        horizontal={true}
-      />
+      <View>
+        <Text>Spjalla við hrátt spjallmenni</Text>
+        <BotCard botType={'raw'} />
+      </View>
+      <Text>Eða veldu eitt af eftirfarandi sérhæfðum spjallmennum:</Text>
+      <View>
+        <FlatList
+          data={DATA}
+          renderItem={({ item }) => <BotCard botType={item.botType} />}
+          keyExtractor={(_, idx) => idx.toString()}
+          horizontal={true}
+        />
+      </View>
     </SafeAreaView>
   </>
   );

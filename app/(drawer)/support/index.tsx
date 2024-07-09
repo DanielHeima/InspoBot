@@ -23,8 +23,8 @@ export default function Page() {
       <ThemedView style={{ width: '100%', height: 1, marginTop: 50, marginBottom: 20}} lightBackground={'gray'} darkBackground={'white'}></ThemedView>
       <ThemedText style={{ marginTop: 20, marginBottom: 20 }}>{useLabel('supportFoundBug')}</ThemedText>
       <ThemedText type={"subtitle"}>{useLabel('supportRaiseIssue')}</ThemedText>
-      <Link href={'https://github.com/DanielHeima/InspoBot'}>
-        <ThemedText light="lightblue" dark="lightblue" type={'subtitle'}>https://github.com/DanielHeima/InspoBot</ThemedText>
+      <Link href={'https://github.com/DanielHeima/InspoBot/issues'}>
+        <ThemedText light="lightblue" dark="lightblue" type={'subtitle'}>https://github.com/DanielHeima/InspoBot/issues</ThemedText>
       </Link>
     </ThemedView>
   );

@@ -15,7 +15,7 @@ const EN = {
   greetingEvening: 'Good evening',
   supportThanks: 'Thank you ❤️',
   supportThanksSub: 'for considering supporting this project. Hopefully the app has been valuable to you.',
-  supportCoffeeLinkDesc: "I'm an independant developer. You can support me at the following link:",
+  supportCoffeeLinkDesc: "This app was developed and funded by me alone. You can support me at the following link:",
   supportWatchAd: 'Or by watching an ad:',
   supportFoundBug: 'Found a bug?',
   supportRaiseIssue: 'Raise an issue at'
@@ -36,10 +36,10 @@ const IS: typeof EN = {
   greetingEvening: 'Gott kvöld',
   supportThanks: 'Takk fyrir ❤️',
   supportThanksSub: 'að íhuga að styðja þetta verkefni. Vonandi hefur appið verið þér einhvers virði.',
-  supportCoffeeLinkDesc: 'Ég er sjálfstæður forritari. Hægt er að styðja mig á eftirfarandi hlekk:',
+  supportCoffeeLinkDesc: 'Þetta app var þróað af mér einum og stend ég einnig straum af uppihaldskostnaði þess. Hægt er að styðja mig í því á eftirfarandi hlekk:',
   supportWatchAd: 'Eða með því að horfa á auglýsingu:',
   supportFoundBug: 'Fannstu pöddu?',
-  supportRaiseIssue: 'Hægt er að búa til villulýsingu hér undir "issues":'
+  supportRaiseIssue: 'Hægt er að búa til villulýsingu hér:'
 }
 
 export const APP_LABELS: { [lang in Language]: typeof EN } = {

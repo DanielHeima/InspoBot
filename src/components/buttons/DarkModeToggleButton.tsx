@@ -67,8 +67,8 @@ export function DarkModeToggleButton({ style }: { style?: StyleProp<ViewStyle> }
         <SvgUri
           fill={svgIconState.type === 'moon' ? '#333' : sunStrokeColor}
           stroke={svgIconState.type === 'moon' ? '#333' : sunFillColor}
-          width={30}
-          height={30}
+          width={32}
+          height={32}
           uri={svgIconState.uri} />
       </Pressable>
     </AnimatedView>

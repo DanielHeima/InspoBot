@@ -18,7 +18,8 @@ export function DrawerScreen({ title, headerLeftShown = true, headerRightShown =
     headerBackground: () => <HeaderBackground headerColor={headerColor}/>,
     headerLeft: () => headerLeftShown ? <DrawerToggleButton /> : <></>,
     headerRight: () => headerRightShown ? <HeaderRight {...rest} /> : <></>,
-    title
+    title,
+    drawerLabel: title
   }} />
 }
 

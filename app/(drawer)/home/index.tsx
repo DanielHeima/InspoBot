@@ -19,7 +19,8 @@ export default function HomeScreen() {
         <ThemedText>{useLabel('homePressButtonBelow')}</ThemedText>
         <View style={{ marginTop: 40 }}><Button title={'TODO BREYTA  new convo'} onPress={() => router.push('(drawer)/home/newconvo')}></Button></View>
         
-        <ThemedText style={{ marginTop: 40 }} type={'subtitle'}>{useLabel('homeGoToOlder')}</ThemedText>
+        {/** // TODO visible ef til stadar */}
+        <ThemedText style={{ marginTop: 40 }} type={'subtitle'}>{useLabel('homeGoToOlder')}</ThemedText> 
       </ThemedView>
     </>
   );
@@ -30,5 +31,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    padding: 20
   }
 });

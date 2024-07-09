@@ -9,7 +9,7 @@ export default function DrawerLayout() {
   return (
     <Drawer
       screenOptions={{
-        drawerStyle: [styles.drawerStyle, {backgroundColor: backgroundColor}],
+        drawerStyle: [styles.drawerStyle, { backgroundColor: backgroundColor }],
         swipeEdgeWidth: 0,
         headerShown: false,
         drawerItemStyle: styles.drawerItemStyle as StyleProp<ViewStyle>
@@ -24,21 +24,18 @@ export default function DrawerLayout() {
         name='myconvos'
         options={{
           drawerLabel: useLabel('navMyConvos'),
-          title: useLabel('navMyConvos'),
         }}
       />
       <Drawer.Screen
         name='settings'
         options={{
           drawerLabel: useLabel('navSettings'),
-          title: useLabel('navSettings')
         }}
       />
       <Drawer.Screen
         name='support'
         options={{
           drawerLabel: useLabel('navSupport'),
-          title: useLabel('navSupport')
         }}
       />
     </Drawer>
@@ -48,7 +45,8 @@ export default function DrawerLayout() {
 
 const styles = StyleSheet.create({
   drawerStyle: {
-    gap: 50,
+    display: 'flex',
+    justifyContent: 'space-evenly'
   },
   drawerItemStyle: {
     fontSize: 30

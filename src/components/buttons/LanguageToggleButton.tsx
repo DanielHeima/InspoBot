@@ -1,4 +1,4 @@
-import { View, Pressable, ViewStyle, StyleProp } from "react-native";
+import { View, Pressable, ViewStyle, StyleProp, Dimensions } from "react-native";
 import { useContext } from "react";
 import { LanguageContext } from "@/src/context";
 import { SvgUri } from "react-native-svg";
@@ -15,17 +15,15 @@ export function LanguageToggleButton({ style }: { style?: StyleProp<ViewStyle> }
       to: async (next) => {
         await next({
           rotate: "180deg",
-          scale: 0,
           opacity: 0
         });
         toggleLanguage();
         await next({
           rotate: "360deg",
-          scale: 1,
           opacity: 1,
         })
       },
-      from: { rotate: "0deg", scale: 1 }
+      from: { rotate: "0deg" }
     });
   }
 
@@ -33,10 +31,9 @@ export function LanguageToggleButton({ style }: { style?: StyleProp<ViewStyle> }
     return {
       to: {
         rotate: "0deg",
-        scale: 1,
         opacity: 1
       },
-      from: { rotate: "0deg", scale: 1, opacity: 1 },
+      from: { rotate: "0deg", opacity: 1 },
       config: {
         duration: 500,
       }
@@ -44,12 +41,12 @@ export function LanguageToggleButton({ style }: { style?: StyleProp<ViewStyle> }
   });
 
   const AnimatedView = animated(View);
+  const iconDim = 30;
 
-  return <View style={style}>
+  return <View style={[style]}>
     <AnimatedView
       style={{
         transform: [
-          { scale: springs.scale },
           { rotate: springs.rotate },
         ],
         opacity: springs.opacity
@@ -58,10 +55,12 @@ export function LanguageToggleButton({ style }: { style?: StyleProp<ViewStyle> }
       <Pressable
         onPress={handleClick}
       >
-        <SvgUri
-          width={30}
-          height={30}
-          uri={langCtx.language === 'is' ? isUri : gbUri} />
+        <View style={{ borderRadius: iconDim / 2, width: iconDim, height: iconDim, overflow: "hidden", backgroundColor: 'gray' }}>
+          <SvgUri
+            width={30}
+            height={30}
+            uri={langCtx.language === 'is' ? isUri : gbUri} />
+        </View>
       </Pressable>
     </AnimatedView>
   </View>
